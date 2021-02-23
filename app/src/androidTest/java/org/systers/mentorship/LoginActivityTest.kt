@@ -107,10 +107,8 @@ class LoginActivityTest {
     fun testLoginButtonClickedWhenUsernameAndPasswordAreEmpty() {
         enterCredentials("", "")
 
-        // Checks that the error message in both the editTexts appears after button click
-        onView(withId(R.id.tiUsername)).check(matches(hasTextInputLayoutErrorText(EMPTY_USERNAME_ERROR)))
-        onView(withId(R.id.tiPassword)).check(matches(hasTextInputLayoutErrorText(EMPTY_PASSWORD_ERROR)))
-
+        // Checks that the button is disabled
+        onView(withId(R.id.tiUsername)).check(matches(not(isEnabled())))
     }
 
     /**
@@ -123,9 +121,8 @@ class LoginActivityTest {
     fun testLoginButtonClickedWhenUsernameIsEmptyAndPasswordIsFilled() {
         enterCredentials("", CORRECT_TEST_PASSWORD)
 
-        // Check for error message on username and not on password
-        onView(withId(R.id.tiUsername)).check(matches(hasTextInputLayoutErrorText(EMPTY_USERNAME_ERROR)))
-        onView(withId(R.id.tiPassword)).check(matches(not(hasTextInputLayoutErrorText(EMPTY_PASSWORD_ERROR))))
+        // Checks that the button is disabled
+        onView(withId(R.id.tiUsername)).check(matches(not(isEnabled())))
     }
 
     /**
@@ -138,9 +135,8 @@ class LoginActivityTest {
     fun testLoginButtonClickedWhenUsernameIsFilledAndPasswordIsEmpty() {
         enterCredentials(CORRECT_TEST_USERNAME, "")
 
-        // Check for no error message on username with an error message on password
-        onView(withId(R.id.tiUsername)).check(matches(not(hasTextInputLayoutErrorText(EMPTY_USERNAME_ERROR))))
-        onView(withId(R.id.tiPassword)).check(matches(hasTextInputLayoutErrorText(EMPTY_PASSWORD_ERROR)))
+        // Checks that the button is disabled
+        onView(withId(R.id.tiUsername)).check(matches(not(isEnabled())))
     }
 
     /**
@@ -167,7 +163,6 @@ class LoginActivityTest {
     @Test
     fun testLoginButtonClickedWhenDataIsCorrect() {
         enterCredentials(CORRECT_TEST_USERNAME, CORRECT_TEST_PASSWORD)
-
         // Verify that MainActivity is started
         intended(hasComponent(
             ComponentName(InstrumentationRegistry.getInstrumentation().context, MainActivity::class.java))
